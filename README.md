@@ -51,11 +51,12 @@ Any user that should have access to admin commands should be added to this text 
 
 Example of what the file should look like. : 
 
-'''
+```
 user1
 user2
 user3
-'''
+```
+
 ---------------------------------------------------------------
 
 Step 5: Run the bot:
