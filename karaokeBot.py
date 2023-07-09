@@ -8,11 +8,13 @@ import webbrowser
 import os
 import traceback
 import sys
+import math
 
 userSongsDictionary = {}
 users = set()
 userTurns = []
 admins = set()
+lastPlayedTime = 0
 
 def setupAdmins(): 
     file = open("./admins.txt", "r")
@@ -88,10 +90,19 @@ async def addSong(username, user_message, message, client):
 async def playNext(message, username, client):
     global userSongsDictionary
     global users
-    global userTurns    
+    global userTurns
+    global lastPlayedTime
     if len(users) == 0:
         await message.channel.send("No songs in the queue. Try again after 'addSong'.")
-        return         
+        return
+    
+    currentTime = time.time()
+    if lastPlayedTime + 30 > currentTime:
+        await message.channel.send("You must wait 30 seconds between playing songs. It has been " + str(math.floor(currentTime - lastPlayedTime)) + " seconds")
+        return
+    else: 
+        lastPlayedTime = currentTime    
+    
     nextUser = userTurns[0]
     nextSong = dequeueSong()
     webbrowser.open_new_tab(nextSong)  # Go to example.com
