@@ -12,14 +12,27 @@ import sys
 userSongsDictionary = {}
 users = set()
 userTurns = []
+admins = set()
+
+def setupAdmins(): 
+    file = open("./admins.txt", "r")
+    ADMINS = file.read()
+    file.close()
+    ADMINS = ADMINS.split("\n")
+    admins.update(ADMINS)
 
 def isSuperAdmin(username):
     ## TODO - add this to a text file. 
     return False
     
 def isAdmin(username):
+    global admins
     if(isSuperAdmin(username)):
         return True
+    elif(username in admins):
+        return True
+    else: 
+        return False
 
 def isYoutubeUrl(url):
     return "www.youtube.com" in url or "youtu.be" in url
@@ -226,5 +239,6 @@ def run_discord_bot():
             traceback.print_exc()
 
     client.run(TOKEN)
-    
+
+setupAdmins()
 run_discord_bot()

@@ -45,8 +45,17 @@ Copy token.txt to the same folder as karaokeBot.py
 
 Step 4: Add Admins to file:
 
-##TODO - still needs to be hardcoded. 
+Create a file called admins.txt in the same folder as karaokeBot.py
 
+Any user that should have access to admin commands should be added to this text file separated by a newline.
+
+Example of what the file should look like. : 
+
+'''
+user1
+user2
+user3
+'''
 ---------------------------------------------------------------
 
 Step 5: Run the bot:
