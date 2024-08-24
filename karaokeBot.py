@@ -97,8 +97,8 @@ async def playNext(message, username, client):
         return
     
     currentTime = time.time()
-    if lastPlayedTime + 30 > currentTime:
-        await message.channel.send("You must wait 30 seconds between playing songs. It has been " + str(math.floor(currentTime - lastPlayedTime)) + " seconds")
+    if lastPlayedTime + 15 > currentTime:
+        await message.channel.send("You must wait 15 seconds between playing songs. It has been " + str(math.floor(currentTime - lastPlayedTime)) + " seconds")
         return
     else: 
         lastPlayedTime = currentTime    
@@ -119,6 +119,32 @@ async def nextSong(message, username, client):
     nextSong = userSongsDictionary[user][0]
     await message.channel.send(f'NextSong is {nextSong}.')
     await message.channel.send(f'it was requested by {user}.')
+
+async def myNextSong(message, username, client):
+    global userSongsDictionary
+    global users
+    global userTurns    
+    if userSongsDictionary[username] == None or len(userSongsDictionary[username]) == 0:
+        await message.channel.send("No songs in the queue. Try again after 'addSong'.")
+        return         
+        
+    userNextSong = userSongsDictionary[username][0]
+    await message.channel.send(f'Your next song is {userNextSong}.')
+
+async def deleteMyNextSong(message, username, client):
+    global userSongsDictionary
+    global users
+    global userTurns    
+    if userSongsDictionary[username] == None or len(userSongsDictionary[username]) == 0:
+        await message.channel.send("No songs in the queue. Try again after 'addSong'.")
+        return         
+        
+    userNextSong = userSongsDictionary[username].pop(0)
+    if (len(userSongsDictionary[username]) == 0):
+        users.remove(username)
+        userTurns.remove(username)
+
+    await message.channel.send(f'Deleted {userNextSong} from queue. ')
 
 async def listSongs(message, username, client):
     global userSongsDictionary
@@ -157,9 +183,9 @@ async def deleteNext(message, username, client):
         return      
     user = userTurns[0]
     if (isAdmin(username) or user == username):
-        userSongsDictionary[username].pop(0)
-        if (len(userSongsDictionary[username]) == 0):
-            users.remove(username)
+        userSongsDictionary[user].pop(0)
+        if (len(userSongsDictionary[user]) == 0):
+            users.remove(user)
             userTurns.pop(0)
         await message.channel.send(f"{username} song removed from their queue.")
     else:
@@ -233,18 +259,42 @@ def run_discord_bot():
             if user_message.startswith(__COMMAND_PREFIX__ + 'playNext'):
                 await playNext(message, username, client)
                 return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'play'):
+                await playNext(message, username, client)
+                return
             if user_message.startswith(__COMMAND_PREFIX__ + 'nextSong'):
                 await nextSong(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'next'):
+                await nextSong(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'myNextSong'):
+                await myNextSong(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'myNext'):
+                await myNextSong(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteMyNextSong'):
+                await deleteMyNextSong(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteMyNext'):
+                await deleteMyNextSong(message, username, client)
                 return
             if user_message.startswith(__COMMAND_PREFIX__ + 'listSongs'):
                 await listSongs(message, username, client)
                 return                
             if user_message.startswith(__COMMAND_PREFIX__ + 'skipSong'):
                 await skipSong(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'skip'):
+                await skipSong(message, username, client)
                 return            
             if user_message.startswith(__COMMAND_PREFIX__ + 'deleteNext'):
                 await deleteNext(message, username, client)
                 return                      
+            if user_message.startswith(__COMMAND_PREFIX__ + 'delete'):
+                await deleteNext(message, username, client)
+                return    
         except Exception:
             print ("exception")
             traceback.print_exc()
