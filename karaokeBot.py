@@ -208,6 +208,18 @@ async def end(message, client):
         return
     await message.channel.send("Shutting Down. ")
     exit()
+    
+async def proxy(message, user_message, client):
+    commands = user_message.split(" ")
+    if (len(commands) < 3):
+        await message.channel.send("Proxy Failed. Inputted incorrectly. ")
+        return None
+    proxyUser = commands[1]
+    message = ""
+    for i in range(len(commands)):
+        if i > 1:
+            message += commands[i] + " "
+    return [proxyUser, message]
 
 def run_discord_bot():
 
@@ -244,6 +256,12 @@ def run_discord_bot():
             if user_message.startswith(__COMMAND_PREFIX__ + 'hi'):
                 await message.channel.send("hi.")
                 return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'proxy'):
+                proxyUserAndMessage = await proxy(message, user_message, client)
+                if proxyUserAndMessage is not None:
+                    username = proxyUserAndMessage[0]
+                    message.author = proxyUserAndMessage[0]
+                    user_message = proxyUserAndMessage[1]
             if user_message.startswith(__COMMAND_PREFIX__ + 'end'):
                 await end(message, client)
                 return
