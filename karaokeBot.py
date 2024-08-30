@@ -158,6 +158,30 @@ async def listSongs(message, username, client):
         for song in userSongsDictionary[user]:
             userSongs += song + "\n"
         await message.channel.send(f"{user}'s queue is:\n{userSongs}.")
+        
+async def listQueue(message, username, client):
+    global users
+    global userTurns
+    if len(users) == 0:
+        await message.channel.send("No songs in the queue. Try again after 'addSong'.")
+        return    
+    userQueue = ""
+    userNumber = 1
+    for user in userTurns:
+        userQueue += f"{userNumber}. {user}\n"
+        userNumber += 1
+    await message.channel.send(f"Queue Order is:\n{userQueue}")
+        
+async def listMySongs(message, username, client):
+    global userSongsDictionary
+    global users
+    if len(users) == 0:
+        await message.channel.send("No songs in the queue. Try again after 'addSong'.")
+        return         
+    userSongs = ""
+    for song in userSongsDictionary[username]:
+        userSongs += song + "\n"
+    await message.channel.send(f"{username}'s queue is:\n{userSongs}.")
 
 async def skipSong(message, username, client):
     global userSongsDictionary
@@ -301,6 +325,18 @@ def run_discord_bot():
             if user_message.startswith(__COMMAND_PREFIX__ + 'listSongs'):
                 await listSongs(message, username, client)
                 return                
+            if user_message.startswith(__COMMAND_PREFIX__ + 'listQueue'):
+                await listQueue(message, username, client)
+                return    
+            if user_message.startswith(__COMMAND_PREFIX__ + 'listMySongs'):
+                await listMySongs(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'mySongs'):
+                await listMySongs(message, username, client)
+                return
+            if user_message.startswith(__COMMAND_PREFIX__ + 'myQueue'):
+                await listMySongs(message, username, client)
+                return
             if user_message.startswith(__COMMAND_PREFIX__ + 'skipSong'):
                 await skipSong(message, username, client)
                 return
