@@ -277,6 +277,8 @@ def run_discord_bot():
                 
             command = user_message.split(" ")[0]
             
+            command = command.lower()
+            
             if user_message.startswith(__COMMAND_PREFIX__ + 'hi'):
                 await message.channel.send("hi.")
                 return
@@ -295,55 +297,55 @@ def run_discord_bot():
             if user_message.startswith(__COMMAND_PREFIX__ + 'add'):
                 await addSong(username, user_message, message, client)
                 return            
-            if user_message.startswith(__COMMAND_PREFIX__ + 'addSong'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'addSong'.lower()):
                 await addSong(username, user_message, message, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'playNext'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'playNext'.lower()):
                 await playNext(message, username, client)
                 return
             if user_message.startswith(__COMMAND_PREFIX__ + 'play'):
                 await playNext(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'nextSong'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'nextSong'.lower()):
                 await nextSong(message, username, client)
                 return
             if user_message.startswith(__COMMAND_PREFIX__ + 'next'):
                 await nextSong(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'myNextSong'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'myNextSong'.lower()):
                 await myNextSong(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'myNext'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'myNext'.lower()):
                 await myNextSong(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteMyNextSong'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteMyNextSong'.lower()):
                 await deleteMyNextSong(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteMyNext'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteMyNext'.lower()):
                 await deleteMyNextSong(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'listSongs'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'listSongs'.lower()):
                 await listSongs(message, username, client)
                 return                
-            if user_message.startswith(__COMMAND_PREFIX__ + 'listQueue'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'listQueue'.lower()):
                 await listQueue(message, username, client)
                 return    
-            if user_message.startswith(__COMMAND_PREFIX__ + 'listMySongs'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'listMySongs'.lower()):
                 await listMySongs(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'mySongs'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'mySongs'.lower()):
                 await listMySongs(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'myQueue'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'myQueue'.lower()):
                 await listMySongs(message, username, client)
                 return
-            if user_message.startswith(__COMMAND_PREFIX__ + 'skipSong'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'skipSong'.lower()):
                 await skipSong(message, username, client)
                 return
             if user_message.startswith(__COMMAND_PREFIX__ + 'skip'):
                 await skipSong(message, username, client)
                 return            
-            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteNext'):
+            if user_message.startswith(__COMMAND_PREFIX__ + 'deleteNext'.lower()):
                 await deleteNext(message, username, client)
                 return                      
             if user_message.startswith(__COMMAND_PREFIX__ + 'delete'):
